@@ -1,53 +1,86 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOT - New York ITA RP</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOT — NY ITA RP</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <h1>DOT</h1>
-        <p>Fazione di New York ITA RP</p>
-    </header>
+  <div id="navbar-container"></div>
 
-    <div id="navbar-placeholder"></div>
+  <div class="page-header">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="index.html#fazioni">Fazioni</a><span>›</span> DOT</div>
+    <h1><span class="icon">🚦</span> DOT</h1>
+    <p>Department of Transportation — Gestione del traffico e infrastrutture.</p>
+  </div>
 
-    <div class="container">
-        <div class="card">
-            <h2>Informazioni su DOT</h2>
-            <p>Department of Transportation - Manutenzione stradale.</p>
-            <p>Questa sezione contiene i dettagli operativi, i gradi e le modalità di accesso per la fazione DOT.</p>
-        </div>
-
-        <div class="grid">
-            <div class="card">
-                <h3>Requisiti</h3>
-                <ul>
-                    <li>Conoscenza del regolamento</li>
-                    <li>Microfono funzionante</li>
-                    <li>Serietà e maturità</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Come Entrare</h3>
-                <p>Partecipa ai provini ufficiali o invia la tua candidatura sul nostro server Discord.</p>
-                <a href="#" class="btn">Candidati</a>
-            </div>
-        </div>
+  <div class="section">
+    <div class="faction-hero">
+      <div class="faction-emblem">🚦</div>
+      <div class="faction-info">
+        <span class="faction-tag">Servizio Pubblico — Trasporti</span>
+        <h2>Department of Transportation</h2>
+        <p>Il DOT è il dipartimento responsabile della gestione del traffico, della manutenzione delle strade e delle infrastrutture della città. Gestisce i semafori, i segnali stradali, i lavori pubblici e garantisce la fluidità del traffico nel server.</p>
+      </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 New York ITA RP - ERLC. Tutti i diritti riservati.</p>
-    </footer>
+    <div class="info-grid">
+      <div class="info-block">
+        <h4>🎯 Ruoli Disponibili</h4>
+        <ul>
+          <li>Direttore DOT</li>
+          <li>Supervisore Traffico</li>
+          <li>Ingegnere Stradale</li>
+          <li>Operatore Traffico</li>
+          <li>Tecnico Segnaletica</li>
+          <li>Operaio Stradale</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h4>📋 Responsabilità</h4>
+        <ul>
+          <li>Gestione semafori e segnali</li>
+          <li>Manutenzione strade</li>
+          <li>Gestione incidenti stradali</li>
+          <li>Pianificazione traffico eventi</li>
+          <li>Lavori pubblici in-game</li>
+          <li>Coordinamento con NYPD Traffic</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h4>✅ Requisiti di Accesso</h4>
+        <ul>
+          <li>Minimo 2 giorni nel server</li>
+          <li>Nessun ban attivo</li>
+          <li>Patente di guida in-game</li>
+          <li>Conoscenza del codice della strada</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h4>⚡ Poteri Speciali</h4>
+        <ul>
+          <li>Chiusura temporanea strade</li>
+          <li>Gestione deviazioni traffico</li>
+          <li>Autorizzazione lavori stradali</li>
+          <li>Accesso a veicoli speciali DOT</li>
+        </ul>
+      </div>
+    </div>
 
-    <script>
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
-            });
-    </script>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="come-iniziare.html" class="btn btn-primary">🚀 Candidati Ora</a>
+      <a href="index.html" class="btn btn-outline" style="margin-left:1rem;">← Torna alle Fazioni</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">🗽 New York ITA RP</div>
+    <hr class="footer-divider" />
+    <p>© 2025 New York ITA RP — Server ERLC</p>
+  </footer>
+
+  <script src="navbar.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

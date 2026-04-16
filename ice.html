@@ -1,53 +1,87 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICE - New York ITA RP</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICE — NY ITA RP</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <h1>ICE</h1>
-        <p>Fazione di New York ITA RP</p>
-    </header>
+  <div id="navbar-container"></div>
 
-    <div id="navbar-placeholder"></div>
+  <div class="page-header">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="index.html#fazioni">Fazioni</a><span>›</span> ICE</div>
+    <h1><span class="icon">🛂</span> ICE</h1>
+    <p>Immigration and Customs Enforcement — Controllo immigrazione e dogane.</p>
+  </div>
 
-    <div class="container">
-        <div class="card">
-            <h2>Informazioni su ICE</h2>
-            <p>Immigration and Customs Enforcement.</p>
-            <p>Questa sezione contiene i dettagli operativi, i gradi e le modalità di accesso per la fazione ICE.</p>
-        </div>
-
-        <div class="grid">
-            <div class="card">
-                <h3>Requisiti</h3>
-                <ul>
-                    <li>Conoscenza del regolamento</li>
-                    <li>Microfono funzionante</li>
-                    <li>Serietà e maturità</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Come Entrare</h3>
-                <p>Partecipa ai provini ufficiali o invia la tua candidatura sul nostro server Discord.</p>
-                <a href="#" class="btn">Candidati</a>
-            </div>
-        </div>
+  <div class="section">
+    <div class="faction-hero">
+      <div class="faction-emblem">🛂</div>
+      <div class="faction-info">
+        <span class="faction-tag">Federale — Immigrazione</span>
+        <h2>Immigration and Customs Enforcement</h2>
+        <p>L'ICE è l'agenzia federale responsabile del controllo dell'immigrazione e delle dogane. Nel server gestisce i documenti di identità dei giocatori, controlla i permessi di soggiorno e collabora con la Border Patrol per prevenire l'immigrazione irregolare.</p>
+      </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 New York ITA RP - ERLC. Tutti i diritti riservati.</p>
-    </footer>
+    <div class="info-grid">
+      <div class="info-block">
+        <h4>🎯 Ruoli Disponibili</h4>
+        <ul>
+          <li>Direttore ICE</li>
+          <li>Supervisore</li>
+          <li>Agente Senior</li>
+          <li>Agente ICE</li>
+          <li>Agente in Prova</li>
+          <li>Analista Documenti</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h4>📋 Responsabilità</h4>
+        <ul>
+          <li>Controllo documenti d'identità</li>
+          <li>Gestione permessi di soggiorno</li>
+          <li>Operazioni anti-immigrazione clandestina</li>
+          <li>Collaborazione con Border Patrol</li>
+          <li>Espulsioni e rimpatri RP</li>
+          <li>Indagini su traffico di persone</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h4>✅ Requisiti di Accesso</h4>
+        <ul>
+          <li>Minimo 5 giorni nel server</li>
+          <li>Nessun ban attivo</li>
+          <li>Conoscenza del regolamento</li>
+          <li>Colloquio con un Supervisore</li>
+          <li>Periodo di prova 48h</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h4>⚡ Poteri Speciali</h4>
+        <ul>
+          <li>Verifica documenti in-game</li>
+          <li>Fermo per controllo identità</li>
+          <li>Operazioni di deportazione</li>
+          <li>Accesso database federale</li>
+        </ul>
+      </div>
+    </div>
 
-    <script>
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
-            });
-    </script>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="come-iniziare.html" class="btn btn-primary">🚀 Candidati Ora</a>
+      <a href="index.html" class="btn btn-outline" style="margin-left:1rem;">← Torna alle Fazioni</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">🗽 New York ITA RP</div>
+    <hr class="footer-divider" />
+    <p>© 2025 New York ITA RP — Server ERLC</p>
+  </footer>
+
+  <script src="navbar.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
