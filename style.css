@@ -290,7 +290,7 @@ ul { list-style: none; }
 }
 .stat-number.online {
   color: #ff4c4c;
-  text-shadow: 0 0 20px rgba(76, 255, 145, 0.4);
+  text-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
   font-size: 1.8rem;
 }
 .stat-icon {
