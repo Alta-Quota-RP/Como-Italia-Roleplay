@@ -1,75 +1,84 @@
-/* =============================================
-   NY ITA RP — MAIN JS
-   ============================================= */
+/* ============================================================
+   NEW YORK ITA RP — ERLC | Global JavaScript
+   ============================================================ */
 
-// ===== TICKER DUPLICATION =====
 document.addEventListener('DOMContentLoaded', () => {
-  const tickerInner = document.querySelector('.ticker-inner');
-  if (tickerInner) {
-    const clone = tickerInner.innerHTML;
-    tickerInner.innerHTML += clone; // duplicate for seamless loop
-  }
-});
 
-// ===== ANIMATED COUNTER =====
-function animateCounter(el, target, duration = 1500) {
-  const start = 0;
-  const startTime = performance.now();
-  const isFloat = target.toString().includes('.');
+  /* ---------- Hamburger Menu ---------- */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks  = document.querySelector('.nav-links');
 
-  function update(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    const current = Math.floor(eased * target);
-
-    if (isFloat) {
-      el.textContent = (eased * target).toLocaleString('it-IT', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    } else {
-      el.textContent = current.toLocaleString('it-IT');
-    }
-
-    if (progress < 1) requestAnimationFrame(update);
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
   }
 
-  requestAnimationFrame(update);
-}
-
-// ===== INTERSECTION OBSERVER FOR COUNTERS =====
-const counterEls = document.querySelectorAll('.big-num');
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !entry.target.dataset.animated) {
-      entry.target.dataset.animated = 'true';
-      const text = entry.target.textContent;
-      const num = parseFloat(text.replace(/\./g, '').replace(',', '.'));
-      if (!isNaN(num) && num > 10) {
-        animateCounter(entry.target, num);
+  /* ---------- Mobile Dropdown Toggle ---------- */
+  document.querySelectorAll('.nav-dropdown > a').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900) {
+        e.preventDefault();
+        link.closest('.nav-dropdown').classList.toggle('open');
       }
+    });
+  });
+
+  /* ---------- Active Nav Link ---------- */
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    const href = a.getAttribute('href');
+    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+      a.classList.add('active');
     }
   });
-}, { threshold: 0.5 });
 
-counterEls.forEach(el => counterObserver.observe(el));
+  /* ---------- Animated Counter ---------- */
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const duration = 1800;
+    const step = Math.ceil(target / (duration / 16));
+    let current = 0;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = current.toLocaleString('it-IT');
+    }, 16);
+  }
 
-// ===== SCROLL ANIMATIONS =====
-const animateEls = document.querySelectorAll(
-  '.step-card, .faction-card, .timeline-item, .shop-card, .rule-item'
-);
+  const counters = document.querySelectorAll('[data-target]');
+  if (counters.length > 0) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => observer.observe(c));
+  }
 
-const animObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-      animObserver.unobserve(entry.target);
-    }
+  /* ---------- Rule Accordion ---------- */
+  document.querySelectorAll('.rule-section-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const section = header.closest('.rule-section');
+      section.classList.toggle('open');
+    });
   });
-}, { threshold: 0.1 });
 
-animateEls.forEach((el, i) => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = `opacity 0.5s ${i * 0.05}s ease, transform 0.5s ${i * 0.05}s ease`;
-  animObserver.observe(el);
+  /* ---------- Smooth Scroll for anchor links ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
 });

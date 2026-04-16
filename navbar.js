@@ -1,47 +1,44 @@
-/* =============================================
-   NY ITA RP — NAVBAR JS
-   ============================================= */
+/* ============================================================
+   NEW YORK ITA RP — ERLC | Navbar Injector
+   ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.getElementById('navbar');
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
+(function() {
+  const navHTML = `
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      🗽 NY ITA RP <span class="badge-erlc">ERLC</span>
+    </a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="storia.html">Storia</a></li>
+      <li><a href="regolamento.html">Regolamento</a></li>
+      <li class="nav-dropdown">
+        <a href="#">Fazioni</a>
+        <div class="dropdown-menu">
+          <a href="governo.html">🏛️ Governo</a>
+          <a href="prefettura.html">🏢 Prefettura</a>
+          <a href="tribunale.html">⚖️ Tribunale</a>
+          <a href="comune.html">🏙️ Comune</a>
+          <a href="ice.html">🛂 ICE</a>
+          <a href="border-patrol.html">🚧 Border Patrol</a>
+          <a href="nypd.html">👮 NYPD</a>
+          <a href="nyso.html">🔰 NYSO</a>
+          <a href="nyfd.html">🚒 NYFD</a>
+          <a href="ems.html">🚑 EMS</a>
+          <a href="dot.html">🚦 DOT</a>
+          <a href="aziende.html">🏢 Aziende</a>
+          <a href="gang.html">🔫 Gang</a>
+          <a href="mafie.html">🤵 Mafie</a>
+        </div>
+      </li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="come-iniziare.html">Come Iniziare</a></li>
+    </ul>
+  </nav>`;
 
-  // Scroll effect
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-
-  // Mobile toggle
-  navToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
-
-  // Close on link click (mobile)
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-    });
-  });
-
-  // Active link highlight on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navLinks.querySelectorAll('a').forEach(a => {
-          a.style.color = '';
-        });
-        const activeLink = navLinks.querySelector(`a[href="#${id}"]`);
-        if (activeLink) activeLink.style.color = 'var(--blue-glow)';
-      }
-    });
-  }, { threshold: 0.3 });
-
-  sections.forEach(s => observer.observe(s));
-});
+  const container = document.getElementById('navbar-container');
+  if (container) container.innerHTML = navHTML;
+})();
