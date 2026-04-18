@@ -1,84 +1,145 @@
-/* ============================================================
-   NEW YORK ITA RP — ERLC | Global JavaScript
-   ============================================================ */
+/**
+ * APEX DESIGNS — main.js
+ * Gestisce: config dinamica, navbar, animazioni, discord links
+ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  const cfg = window.SITE_CONFIG || {};
 
-  /* ---------- Hamburger Menu ---------- */
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks  = document.querySelector('.nav-links');
-
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-  }
-
-  /* ---------- Mobile Dropdown Toggle ---------- */
-  document.querySelectorAll('.nav-dropdown > a').forEach(link => {
-    link.addEventListener('click', e => {
-      if (window.innerWidth <= 900) {
-        e.preventDefault();
-        link.closest('.nav-dropdown').classList.toggle('open');
-      }
-    });
+  // ── DISCORD LINKS ──────────────────────────────────────────────
+  const discordUrl = cfg.discordInvite || "#";
+  const discordIds = [
+    "discord-link", "discord-link-mobile", "discord-hero",
+    "discord-cta-btn", "footer-discord", "footer-discord-2"
+  ];
+  discordIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = discordUrl;
+  });
+  // Anche link generici discord nelle pagine
+  document.querySelectorAll(".discord-dynamic").forEach(el => {
+    el.href = discordUrl;
   });
 
-  /* ---------- Active Nav Link ---------- */
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    const href = a.getAttribute('href');
-    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-      a.classList.add('active');
+  // ── ACCENT COLOR ───────────────────────────────────────────────
+  if (cfg.accentColor) {
+    document.documentElement.style.setProperty("--accent", cfg.accentColor);
+  }
+  if (cfg.secondaryColor) {
+    document.documentElement.style.setProperty("--accent2", cfg.secondaryColor);
+  }
+
+  // ── NAVBAR SCROLL ──────────────────────────────────────────────
+  const navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 60) {
+      navbar?.classList.add("scrolled");
+    } else {
+      navbar?.classList.remove("scrolled");
     }
   });
 
-  /* ---------- Animated Counter ---------- */
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.target, 10);
-    const duration = 1800;
-    const step = Math.ceil(target / (duration / 16));
-    let current = 0;
-    const timer = setInterval(() => {
-      current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
-      el.textContent = current.toLocaleString('it-IT');
-    }, 16);
-  }
+  // ── HAMBURGER MENU ─────────────────────────────────────────────
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+  hamburger?.addEventListener("click", () => {
+    hamburger.classList.toggle("open");
+    mobileMenu?.classList.toggle("open");
+  });
+  // Chiudi cliccando link
+  mobileMenu?.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", () => {
+      hamburger?.classList.remove("open");
+      mobileMenu?.classList.remove("open");
+    });
+  });
 
-  const counters = document.querySelectorAll('[data-target]');
-  if (counters.length > 0) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          observer.unobserve(entry.target);
+  // ── SCROLL REVEAL ──────────────────────────────────────────────
+  const reveals = document.querySelectorAll(
+    ".service-card, .showcase-item, .stat-item, .product-card, .process-step, .faq-item, .contact-card"
+  );
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => {
+    el.classList.add("reveal-target");
+    observer.observe(el);
+  });
+
+  // ── CURSOR GLOW ────────────────────────────────────────────────
+  const cursor = document.createElement("div");
+  cursor.className = "cursor-glow";
+  document.body.appendChild(cursor);
+  document.addEventListener("mousemove", e => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  });
+
+  // ── ACTIVE NAV LINK ────────────────────────────────────────────
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    const href = link.getAttribute("href");
+    if (href === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+
+  // ── FAQ ACCORDION ──────────────────────────────────────────────
+  document.querySelectorAll(".faq-item").forEach(item => {
+    const question = item.querySelector(".faq-question");
+    question?.addEventListener("click", () => {
+      const isOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("open"));
+      if (!isOpen) item.classList.add("open");
+    });
+  });
+
+  // ── FILTER TABS ────────────────────────────────────────────────
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".product-card").forEach(card => {
+        if (filter === "all" || card.dataset.category === filter) {
+          card.style.display = "";
+          setTimeout(() => card.classList.add("visible"), 10);
+        } else {
+          card.classList.remove("visible");
+          setTimeout(() => card.style.display = "none", 300);
         }
       });
-    }, { threshold: 0.5 });
-    counters.forEach(c => observer.observe(c));
-  }
-
-  /* ---------- Rule Accordion ---------- */
-  document.querySelectorAll('.rule-section-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const section = header.closest('.rule-section');
-      section.classList.toggle('open');
     });
   });
 
-  /* ---------- Smooth Scroll for anchor links ---------- */
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', e => {
-      const target = document.querySelector(anchor.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // ── COUNTER ANIMATION ─────────────────────────────────────────
+  const counters = document.querySelectorAll(".stat-num");
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const text = el.textContent;
+        const num = parseInt(text.replace(/\D/g, ""));
+        const suffix = text.replace(/[0-9]/g, "");
+        if (isNaN(num)) return;
+        let start = 0;
+        const step = num / 40;
+        const timer = setInterval(() => {
+          start = Math.min(start + step, num);
+          el.textContent = Math.floor(start) + suffix;
+          if (start >= num) clearInterval(timer);
+        }, 30);
+        counterObserver.unobserve(el);
       }
     });
-  });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
 
 });
